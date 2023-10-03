@@ -24,17 +24,14 @@ public class PersonaRestController {
 	ArrayList<Persona> listaPersonas = new ArrayList<>(
 			Arrays.asList(new Persona(1, "Juan", "Pérez", 25), new Persona(2, "María", "Gómez", 30),
 					new Persona(3, "Pedro", "González", 28), new Persona(4, "Anna", "Martínez", 28)));
-	
-	
-	
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getPersona(@PathVariable int id) {
-		
-		if(id < 0) {
+
+		if (id < 0) {
 			return ResponseEntity.badRequest().build();
 		}
-		
+
 		for (Persona p : listaPersonas) {
 			if (p.getId() == id) {
 				return ResponseEntity.ok(p);
@@ -46,33 +43,37 @@ public class PersonaRestController {
 	@PostMapping
 	public ResponseEntity<?> createPersona(@RequestBody Persona persona) {
 		listaPersonas.add(persona);
-		
-		URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(persona.getId())
-                .toUri();
-		
+
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(persona.getId())
+				.toUri();
+
 		return ResponseEntity.created(location).build();
 
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity deletePersona(@PathVariable int id) {
-		
-		if(id < 0) {
+
+		if (id < 0) {
 			return ResponseEntity.badRequest().build();
 		}
-		
-		for (Persona persona : this.listaPersonas) {
-			if (persona.getId()==id) {
-				this.listaPersonas.remove(persona);
+
+//		for (Persona persona : this.listaPersonas) {
+//			if (persona.getId()==id) {
+//				this.listaPersonas.remove(persona);
+//				return ResponseEntity.noContent().build();
+//			}
+//		}
+
+		for (Persona p : new ArrayList<>(listaPersonas)) {
+			if (p.getId() == id) {
+				listaPersonas.remove(p);
 				return ResponseEntity.noContent().build();
 			}
+
 		}
-		
+
 		return ResponseEntity.notFound().build();
-		
 
 	}
 
