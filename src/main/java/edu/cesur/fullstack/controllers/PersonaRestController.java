@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,13 +34,13 @@ public class PersonaRestController {
 	PersonaService personaService;
 
 	// DI - caso 2. Recomendado por las pruebas unitarias
-	//Si uso la desambiguación por properties, debo quitar el qualifier
-	public PersonaRestController(@Qualifier("generales") 	PersonaService personaService) {
+	// Si uso la desambiguación por properties, debo quitar el qualifier
+	public PersonaRestController(@Qualifier("generales") PersonaService personaService) {
 		this.personaService = personaService;
 
 	}
-	
-	//EndPoints	
+
+	// EndPoints
 	@GetMapping
 	public ResponseEntity<?> getPersonas() {
 		ArrayList<Persona> listaPersonas = personaService.getAllPersonas();
@@ -69,7 +70,9 @@ public class PersonaRestController {
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(persona.getId())
 				.toUri();
 
-		return ResponseEntity.created(location).build();
+		return ResponseEntity.created(location).build(); //opción sin devolver el recurso creado
+		//return ResponseEntity.created(location).body(persona); //opción devolviendo tb el recurso creado.
+		//return new ResponseEntity<>(persona, HttpStatus.CREATED); usando HttpStatus
 
 	}
 
@@ -106,7 +109,5 @@ public class PersonaRestController {
 
 		return ResponseEntity.notFound().build();
 	}
-
-
 
 }

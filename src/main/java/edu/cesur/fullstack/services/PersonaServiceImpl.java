@@ -3,14 +3,17 @@ package edu.cesur.fullstack.services;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import edu.cesur.fullstack.model.Persona;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Service("generales") //qualifiers
+//@Primary
+@Service("generales")
 //@ConditionalOnProperty(prefix ="implementacion", value ="persona", havingValue = "generaless")
 public class PersonaServiceImpl implements PersonaService {
 	
