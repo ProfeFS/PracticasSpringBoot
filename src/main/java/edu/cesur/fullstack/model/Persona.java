@@ -1,5 +1,6 @@
 package edu.cesur.fullstack.model; //se suelen poner domain o model
 
+import edu.cesur.fullstack.validators.CodeValidation;
 import edu.cesur.fullstack.validators.ValidPersonCode;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -28,7 +29,7 @@ public class Persona {
 	@Email
 	private String email;
 	
-	@ValidPersonCode
+	@CodeValidation
 	private String code;
 
 //	public Persona(int id, String name, String lastName, int age, String email, String code) {
