@@ -1,6 +1,8 @@
 package edu.cesur.fullstack.model; //se suelen poner domain o model
 
 import edu.cesur.fullstack.validators.CodeValidation;
+import edu.cesur.fullstack.validators.OnCreate;
+import edu.cesur.fullstack.validators.OnUpdate;
 import edu.cesur.fullstack.validators.ValidPersonCode;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -15,17 +17,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Persona {
 
-	private int id;
+	@NotNull (groups = {OnCreate.class, OnUpdate.class})
+	private Integer id;
 	
-	@NotBlank(message = "Debes ingresar un nombre válido")
+	@NotBlank(message = "Debes ingresar un nombre válido" ,groups = OnCreate.class )
 	private String name;
 	
 	@NotNull
-    @Size(min=2, max=100)
+    @Size(min=2, max=100) 
 	private String lastName;
+	
 	
 	private int age;
 	
+	@NotBlank (groups = OnCreate.class)
 	@Email
 	private String email;
 	

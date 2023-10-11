@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import edu.cesur.fullstack.model.Persona;
 import edu.cesur.fullstack.services.PersonaService;
 import edu.cesur.fullstack.services.PersonaServiceImpl;
+import edu.cesur.fullstack.validators.OnCreate;
 import jakarta.validation.Valid;
 
 @RestController
@@ -45,7 +46,7 @@ public class PersonaRestController {
 	// EndPoints
 	@GetMapping
 	public ResponseEntity<?> getPersonas() {
-		//ArrayList<Persona> listaPersonas = personaService.getAllPersonas();
+		ArrayList<Persona> listaPersonas = personaService.getAllPersonas();
 		return ResponseEntity.ok(listaPersonas);
 	}
 
@@ -65,7 +66,7 @@ public class PersonaRestController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> createPersona(@RequestBody @Validated Persona persona) {
+	public ResponseEntity<?> createPersona(@RequestBody @Validated(OnCreate.class) Persona persona) {
 		//listaPersonas.add(persona);
 		Persona newPerson = this.personaService.savePersona(persona);
 
@@ -99,7 +100,7 @@ public class PersonaRestController {
 	}
 
 	@PutMapping
-	public ResponseEntity<?> updatePersona(@RequestBody Persona persona) {
+	public ResponseEntity<?> updatePersona(@RequestBody @Validated Persona persona) {
 		for (Persona p : listaPersonas) {
 			if (p.getId() == persona.getId()) {
 				p.setName(persona.getName());
